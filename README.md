@@ -6,4 +6,6 @@ to use this program, simply download the "WidespaceTextGenerator.jar" in the "ex
 
 supported characters are:
 
-!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ and " " (whitespace)
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
+and " " (whitespace)
