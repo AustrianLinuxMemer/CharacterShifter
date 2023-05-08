@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="WidespaceTextGenerator:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/WidespaceTextGenerator_jar</output-path>
+    <output-path>$PROJECT_DIR$/executables</output-path>
     <root id="archive" name="WidespaceTextGenerator.jar">
       <element id="module-output" name="WidespaceTextGenerator" />
     </root>
