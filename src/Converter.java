@@ -2,72 +2,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Converter {
-    public static Map<Character, Character> map; //<normal, widespace>
-    public static Map<Character, Character> invertedMap; //<widespace, normal>
-    public static void initialize() {
-        char[] normalChars = new char[]{' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'};
-        char[] widespaceChars = new char[]{' ', '！', '＂', '＃', '＄', '％', '＆', '＇', '（', '）', '＊', '＋', '，', '－', '．', '／', '０', '１', '２', '３', '４', '５', '６', '７', '８', '９', '：', '；', '＜', '＝', '＞', '？', '＠', 'Ａ', 'Ｂ', 'Ｃ', 'Ｄ', 'Ｅ', 'Ｆ', 'Ｇ', 'Ｈ', 'Ｉ', 'Ｊ', 'Ｋ', 'Ｌ', 'Ｍ', 'Ｎ', 'Ｏ', 'Ｐ', 'Ｑ', 'Ｒ', 'Ｓ', 'Ｔ', 'Ｕ', 'Ｖ', 'Ｗ', 'Ｘ', 'Ｙ', 'Ｚ', '［', '＼', '］', '＾', '＿', '｀', 'ａ', 'ｂ', 'ｃ', 'ｄ', 'ｅ', 'ｆ', 'ｇ', 'ｈ', 'ｉ', 'ｊ', 'ｋ', 'ｌ', 'ｍ', 'ｎ', 'ｏ', 'ｐ', 'ｑ', 'ｒ', 'ｓ', 'ｔ', 'ｕ', 'ｖ', 'ｗ', 'ｘ', 'ｙ', 'ｚ', '｛', '｜', '｝', '～'};
-        map = new HashMap<Character, Character>();
-        invertedMap = new HashMap<Character, Character>();
-        for (int i = 0; i < normalChars.length; i++) {
-            map.put(normalChars[i], widespaceChars[i]);
-            invertedMap.put(widespaceChars[i], normalChars[i]);
-        }
-    }
     public static char convertCharFromNormalToWidespace(char normal) {
-        return (Character)map.get(normal);
+        int normal1 = normal + 65248;
+        return (char) normal1;
     }
     public static char convertCharFromWidespaceToNormal(char widespace){
-        return (Character)invertedMap.get(widespace);
+        int widespace1 = widespace - 65248;
+        return (char) widespace1;
     }
-    public static boolean isValidNormalCharacter(char character) throws InvalidCharException {
-        if (map.containsKey(character)) {
-            return true;
-        } else {
-            throw new InvalidCharException();
-        }
+    public static boolean isValidNormalCharacter(char character){
+        return character >= 32 && character <= 127;
     }
-    public static boolean isValidWidespaceCharacter(char character) throws InvalidCharException {
-        if (invertedMap.containsKey(character)) {
-            return true;
-        } else {
-            throw new InvalidCharException();
-        }
+    public static boolean isValidWidespaceCharacter(char character){
+        return character >= 32 + 65248 && character <= 127 + 65248;
     }
-    public static boolean isValidNormalString(String string) throws InvalidCharException {
-        char[] charredString = string.toCharArray();
-        for (int i = 0; i < charredString.length; i++) {
-            if (!isValidNormalCharacter(charredString[i])){
-                return false;
-            }
-        }
-        return true;
-    }
-    public static boolean isValidWidespaceString(String string) throws InvalidCharException {
-        char[] charredString = string.toCharArray();
-        for (int i = 0; i < charredString.length; i++) {
-            if (!isValidWidespaceCharacter(charredString[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-    public static String convertStringFromNormalToWidespace(String string) throws InvalidCharException {
-        isValidNormalString(string);
+    public static String convertString(String string) {
         char[] charredString = string.toCharArray();
         char[] newCharredString = new char[charredString.length];
         for (int i = 0; i < charredString.length; i++) {
-            newCharredString[i] = convertCharFromNormalToWidespace(charredString[i]);
+            if (isValidNormalCharacter(charredString[i])) {
+                newCharredString[i] = convertCharFromNormalToWidespace(charredString[i]);
+            } else if (isValidWidespaceCharacter(charredString[i])) {
+                newCharredString[i] = convertCharFromWidespaceToNormal(charredString[i]);
+            } else {
+                System.exit(1);
+            }
         }
-        return String.copyValueOf(newCharredString);
+        String toBeReturned = whitespaceCorrection(String.copyValueOf(newCharredString));
+        return toBeReturned;
     }
-    public static String convertStringFromWidespaceToNormal(String string) throws InvalidCharException {
-        isValidWidespaceString(string);
-        char[] charredString = string.toCharArray();
-        char[] newCharredString = new char[charredString.length];
-        for (int i = 0; i < charredString.length; i++) {
-            newCharredString[i] = convertCharFromWidespaceToNormal(charredString[i]);
+    public static String whitespaceCorrection(String toBeCorrected) {
+        String correctedString = "";
+        String[] splinter = toBeCorrected.split("\uFF00");
+        for (int i = 0; i < splinter.length; i++) {
+            correctedString = correctedString.concat(splinter[i] + "  ");
         }
-        return String.copyValueOf(newCharredString);
+        return correctedString;
     }
 }
