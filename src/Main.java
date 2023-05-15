@@ -11,5 +11,4 @@ public class Main {
             System.out.println(Converter.convertString(args[0], shift));
         }
     }
-    //dang it
 }
