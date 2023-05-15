@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WidespaceTextGenerator.iml" filepath="$PROJECT_DIR$/WidespaceTextGenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CharacterShifter.iml" filepath="$PROJECT_DIR$/CharacterShifter.iml" />
     </modules>
   </component>
 </project>

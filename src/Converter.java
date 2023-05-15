@@ -7,6 +7,6 @@ public class Converter {
         for (int i = 0; i < charredString.length; i++) {
             charredString[i] = convertCharFromNormalToWidespace(charredString[i], shift);
         }
-        return String.copyValueOf(newCharredString);
+        return String.copyValueOf(charredString);
     }
 }
